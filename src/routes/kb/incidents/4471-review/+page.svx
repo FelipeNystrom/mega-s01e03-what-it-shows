@@ -1,0 +1,112 @@
+---
+layout: runbook
+title: '#4471 review · one queue, two date causes'
+owner: FelipeNystrom
+status: reviewed
+reviewed: 2026-10-31
+signature: 'FelipeNystrom · S01E03'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Finding: the merge concealed a second cause
+
+The [original incident](/kb/incidents/4471) says “one issue, one fix queued.” Its own
+computed evidence contradicts that summary. A shared symptom—bookings on the wrong
+date—is not a shared cause. Keep the parser investigation in
+[issue #1](https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/1), and
+track the booking-form hint separately in
+[issue #2](https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/2).
+Neither issue is evidence that a fix has shipped.
+
+## Recount from reports, not intake labels
+
+The table below recomputes distinct report IDs, cause, intake-tag disagreement and
+first/last receipt dates from the exported reports and tenant directory. Overlapping
+export pages repeat IDs; repeated rows must not become additional customers or reports.
+The same ID is counted once, not once per export row or once per matching subject.
+
+<CauseTable ticket={4471} />
+
+The table's “no ticket of its own” wording describes the original exported desk queue,
+not the newly opened issue linked above. Its assignment of the majority to the old
+incident is a bookkeeping convention, not proof that every report there has that cause.
+
+### Parser: day-first input interpreted month-first
+
+The shared parser reads month before day. For a day-first tenant, app/email paths and
+booking-v2 form input can therefore swap the intended month and day. Harbour Dental
+is `en-GB`, booking-v2: `R-41200` describes 7 April becoming 4 July. Morrow Tax is
+`fr-FR`, booking-v2: `R-41205` describes 3 October becoming 10 March even though its
+browser was `en-US` and intake called it `hint`. Tenant locale—not browser locale—is
+the relevant setting. Correct the parser's interpretation of the tenant's input;
+changing booking-v3's hint does not repair this path.
+
+### Hint: booking-v3 instructs the wrong input order
+
+For a day-first tenant, booking-v3 displays `MM/DD/YYYY` while the form reads the
+input in the tenant's day-first order. Following that instruction causes a different
+swap. Copper Studio is `es-ES`, booking-v3: form report `R-41230` describes 6 January
+becoming 1 June but was tagged `parser`. Alder Physio is `de-DE`, booking-v3:
+`R-41241` is another form-path example, with an `en-US` browser. Fix the displayed
+instruction to agree with the tenant-aware form interpretation. Do not change this
+form to parse month-first merely to make the incorrect hint true.
+
+The existing classifier uses tenant locale and form plus report channel: day-first
+booking-v3 **form** reports are `hint`; other supported day-first paths are `parser`.
+A booking-v3 tenant's app report is not automatically a hint report. Intake tags are
+initial guesses and must not be used to select either engineering fix.
+
+## Receipt time is not merge time
+
+<QueueTimeline ticket={4471} />
+
+The received series records when the desk first had each distinct report. The merged
+series records when the desk attached it to this incident. The later bulk merge in
+July is queue administration, not the onset of the product failures. For example,
+`R-41200` arrived on 1 April and was merged on 2 July; `R-41230` arrived on 17 April
+and was also merged on 2 July. Use the table's receipt ranges to describe each cause's
+observed history. Neither receipt dates nor a merge spike establish deployment dates
+or the date the underlying bug was introduced.
+
+## What the one-day notes do—and do not—show
+
+The table also renders the desk's one-day-move notes under their tenant-classified
+cause. For example, `R-41202` describes 11 May versus 12 May rather than an obvious
+month/day swap. Preserve and investigate those descriptions; the existing classifier
+still files them under `parser`. A desk note is not independent evidence of a third,
+timezone-related product defect. Do not silently discard these reports or claim the
+parser reproduction explains every detail of their bodies.
+
+## Repair the dedupe decision, not its history
+
+The accepted [triage page](/kb/triage/dedupe) follows
+[decision 0001](/kb/decisions/0001-dedupe-by-subject): normalize a subject and merge
+without reading the body. The executable examples already refute that policy:
+
+- Alder Physio form versus app can share “Booking on the wrong date” but have different
+  causes: hint versus parser.
+- Kettle Books app versus email can have different subjects but the same parser cause.
+- Copper Studio and Morrow Tax form reports can share “Date is wrong” while using
+  different booking forms and therefore different causes.
+- `unknown.sender` cannot be assigned a cause from the tenant directory, even when
+  both subjects are identical.
+
+This is a systemic desk merge error, not an additional date-product bug. For this
+incident, dedupe exported rows by ID first, resolve the tenant, read the report and
+channel, and compare the supported cause before merging. Subjects may help search;
+they cannot authorize a merge. Group proven same-cause reports into their respective
+issues, retain original IDs and receipt timestamps, and preserve a trace of the old
+merge. Unknown tenants, unsupported locale/path combinations and contradictory
+bodies need manual triage rather than a guess or an automatic merge.
+
+Leave the accepted ADR unchanged as a historical record of what the desk decided.
+Record a superseding decision before treating the safer rule as accepted policy;
+this signed review documents the contradiction and proposed correction, not a
+retroactive rewrite of the old acceptance.
+
+<RenderStamp {signature} />
