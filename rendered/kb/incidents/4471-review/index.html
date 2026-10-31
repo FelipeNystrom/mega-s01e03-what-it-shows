@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../../_app/immutable/entry/start.CfO6YSpb.js" rel="modulepreload">
+    <link href="../../../_app/immutable/entry/start.BfURNkmz.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BYyude3B.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/v-kN_ofU.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/vqndooRD.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BeFzQI18.js" rel="modulepreload">
-		<link href="../../../_app/immutable/entry/app.CIB7rP5m.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.CRaCsL6Q.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/wTHRPoO2.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/D_5y8y9q.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/3wnuWTqM.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/D-GvQivu.js" rel="modulepreload">
 		<link href="../../../_app/immutable/nodes/0.COsM5isQ.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/C6_h4N08.js" rel="modulepreload">
-		<link href="../../../_app/immutable/nodes/5.BhSwoPih.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/gDl-Z7KE.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.D7E9OXxP.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/CHKP0FqM.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/CWWqOL8X.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BumWIXta.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DmtohGnI.js" rel="modulepreload">
@@ -25,11 +25,18 @@
 		<link href="../../../_app/immutable/assets/5.CMZ6TBbc.css" rel="stylesheet">
   </head>
   <body data-sveltekit-preload-data="hover">
-    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 review · one queue, two date causes</h1> <p class="meta svelte-e2jw2j"><span>owner <b>FelipeNystrom</b></span> <span class="status reviewed svelte-e2jw2j">reviewed</span> <span class="svelte-e2jw2j">reviewed 2026-10-31 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><h2>Finding: the merge concealed a second cause</h2> <p>The <a href="/kb/incidents/4471">original incident</a> says “one issue, one fix queued.” Its own
+    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 review · one queue, two date causes</h1> <p class="meta svelte-e2jw2j"><span>owner <b>FelipeNystrom</b></span> <span class="status resolved svelte-e2jw2j">resolved</span> <span class="svelte-e2jw2j">reviewed 2026-10-31 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><h2>Finding: the merge concealed a second cause</h2> <p>The <a href="/kb/incidents/4471">original incident</a> says “one issue, one fix queued.” Its own
 computed evidence contradicts that summary. A shared symptom—bookings on the wrong
 date—is not a shared cause. Keep the parser investigation in <a href="https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/1" rel="nofollow">issue #1</a>, and
 track the booking-form hint separately in <a href="https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/2" rel="nofollow">issue #2</a>.
-Neither issue is evidence that a fix has shipped.</p> <h2>Recount from reports, not intake labels</h2> <p>The table below recomputes distinct report IDs, cause, intake-tag disagreement and
+The original export described queued work. The later desk update below records its
+actual disposition; closure does not mean both causes were fixed.</p> <h2>Desk update: closed 5 October</h2> <p>The course’s engineering update reports <strong>#4471 closed 05 Oct</strong> with different
+outcomes for its two causes:</p> <ul><li><strong>Parser — fixed:</strong> <code>fix(dates): parse dd/mm for eu locales</code>.
+Close <a href="https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/1" rel="nofollow">issue #1</a> as completed, based on that desk update.</li> <li><strong>Hint — won’t fix:</strong> <code>booking-v3 form retired</code>.
+Close <a href="https://github.com/FelipeNystrom/mega-s01e03-what-it-shows/issues/2" rel="nofollow">issue #2</a> as not planned, because the affected form was retired, not because its hint was repaired.</li></ul> <p>These are reported engineering outcomes, not a claim that this repository contains
+the product implementation or that we ran a production verification. The export
+below remains historical evidence through 4 October; do not rewrite receipt dates,
+report counts or the original accepted decision to match the later closure.</p> <h2>Recount from reports, not intake labels</h2> <p>The table below recomputes distinct report IDs, cause, intake-tag disagreement and
 first/last receipt dates from the exported reports and tenant directory. Overlapping
 export pages repeat IDs; repeated rows must not become additional customers or reports.
 The same ID is counted once, not once per export row or once per matching subject.</p> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <p>The table’s “no ticket of its own” wording describes the original exported desk queue,
@@ -74,15 +81,15 @@ retroactive rewrite of the old acceptance.</p> <!--[0--><p class="stamp svelte-1
 			
 			<script>
 				{
-					__sveltekit_1atrfg2 = {
+					__sveltekit_1i1dl91 = {
 						base: new URL("../../..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../../../_app/immutable/entry/start.CfO6YSpb.js"),
-						import("../../../_app/immutable/entry/app.CIB7rP5m.js")
+						import("../../../_app/immutable/entry/start.BfURNkmz.js"),
+						import("../../../_app/immutable/entry/app.CRaCsL6Q.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 5],
